@@ -4,7 +4,7 @@ spring:
             charset: UTF-8 
     mvc: 
         view: 
-            prefix: /jsp/ 
+            prefix: /WEB-INF/jsp/ 
             suffix: .jsp 
 server: 
     tomcat: 
