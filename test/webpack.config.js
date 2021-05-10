@@ -2,9 +2,9 @@ var path = require('path');
 
 module.exports = {
     context: path.resolve(__dirname, 'src/main/jsx'),
-    entry: {
-        main: './MainPage.jsx',
-        page1: './Page1Page.jsx'
+    entry: ['babel-polyfill', "./index"],
+    resolve: {
+        extensions: ['.jsx', '.js'],
     },
     devtool: 'sourcemaps',
     cache: true,
