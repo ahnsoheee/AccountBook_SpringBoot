@@ -34,3 +34,4 @@ build/
 
 node_modules/
 test/src/main/resources/application.yml
+test/src/main/webapp/js/react/
