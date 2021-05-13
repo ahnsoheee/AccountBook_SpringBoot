@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
 
 import com.example.mapper.UserMapper;
 import com.example.vo.UserVO;
+import com.example.service.UserService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -23,30 +25,20 @@ public class UserController {
 
     @Autowired
     UserMapper userMapper;
+    UserService userService;
 
     @PostMapping("/signup")
     public boolean signup(@RequestBody UserVO user) {
-        int res = userMapper.insertUser(user);
-        if (res == 1) return true;
-        return false;
+        return userService.signup(user);
     }
 
     @PostMapping("/signin")
     public boolean signin (@RequestBody UserVO user) {
-        UserVO res = userMapper.findUser(user);
-        if (res != null) return true;
-        return false;
+        return userService.signin(user);
     }
 
     @GetMapping("/{id}")
     public UserVO findUserById(@PathVariable String id) {
-        UserVO user = userMapper.findById(id);
-        return user;
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable String id) {
-        userMapper.deleteUser(id);
-        System.out.println("삭제 성공");
+        return userService.findUserById(id);
     }
 }
