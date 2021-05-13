@@ -11,6 +11,6 @@ public interface UserMapper {
 
     List<UserVO> userList();
     UserVO findUserById(String id);
-    void insertUser(UserVO user);
+    int insertUser(UserVO user);
     void deleteUser(String id);
 }
