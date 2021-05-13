@@ -24,7 +24,7 @@ const Signin = () => {
     } else {
       const res = await API.post("/user/signin", { id: id, pw: pw });
       if (res) {
-        location.href = "/";
+        location.href = "/main";
       } else {
         alert("아이디 또는 비밀번호가 틀렸습니다.");
       }
