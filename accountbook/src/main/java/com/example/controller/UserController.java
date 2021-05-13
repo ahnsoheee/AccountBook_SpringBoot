@@ -30,17 +30,21 @@ public class UserController {
         return userMapper.userList();
     }
 
-    @PostMapping
-    void insertUser(@RequestBody UserVO user) {
-        userMapper.insertUser(user);
-        System.out.println("유저 생성 성공");
+    @PostMapping("/signup")
+    public boolean insertUser(@RequestBody UserVO user) {
+        int res = userMapper.insertUser(user);
+        if (res == 1) {
+            System.out.println("유저 생성 성공");
+            return true;
+        }
+        return false;
     }
-
+    
     @GetMapping("/{id}")
     public UserVO findUserById(@PathVariable String id) {
         System.out.println(userMapper.findUserById(id));
-        UserVO findUser = userMapper.findUserById(id);
-        return findUser;
+        UserVO user = userMapper.findUserById(id);
+        return user;
     }
 
     @DeleteMapping("/{id}")
