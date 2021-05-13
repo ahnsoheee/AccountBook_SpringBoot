@@ -24,26 +24,23 @@ public class UserController {
     @Autowired
     UserMapper userMapper;
 
-    @GetMapping
-    public List<UserVO> userList() {
-        System.out.println(userMapper.userList());
-        return userMapper.userList();
-    }
-
     @PostMapping("/signup")
-    public boolean insertUser(@RequestBody UserVO user) {
+    public boolean signup(@RequestBody UserVO user) {
         int res = userMapper.insertUser(user);
-        if (res == 1) {
-            System.out.println("유저 생성 성공");
-            return true;
-        }
+        if (res == 1) return true;
         return false;
     }
-    
+
+    @PostMapping("/signin")
+    public boolean signin (@RequestBody UserVO user) {
+        UserVO res = userMapper.findUser(user);
+        if (res != null) return true;
+        return false;
+    }
+
     @GetMapping("/{id}")
     public UserVO findUserById(@PathVariable String id) {
-        System.out.println(userMapper.findUserById(id));
-        UserVO user = userMapper.findUserById(id);
+        UserVO user = userMapper.findById(id);
         return user;
     }
 
