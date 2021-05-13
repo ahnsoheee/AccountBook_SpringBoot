@@ -3,7 +3,7 @@ import Input from "./Input";
 import SignButton from "./SignButton";
 import Form from "./Form";
 import Signup from "./Signup";
-// import { API } from "../../api/api";
+import { API } from "../../api/api"
 
 const Signin = () => {
   const [id, setId] = useState("");
@@ -21,13 +21,14 @@ const Signin = () => {
   const onClick = async (e) => {
     if (!id.length || !pw.length) {
       alert("아이디와 비밀번호를 모두 입력하세요.");
-    // } else {
-    //   const res = await API.post("/user/signin", { id: id, pw: pw });
-    //   if (res.result) {
-    //     location.href = "/";
-    //   } else {
-    //     alert("아이디 또는 비밀번호가 틀렸습니다.");
-    //   }
+    } else {
+      const res = await API.post("/user/signin", { id: id, pw: pw });
+      console.log(res)
+      if (res.result) {
+        location.href = "/";
+      } else {
+        alert("아이디 또는 비밀번호가 틀렸습니다.");
+      }
     }
   };
 
