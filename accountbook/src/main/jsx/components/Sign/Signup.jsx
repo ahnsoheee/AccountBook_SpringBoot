@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import SignButton from "./SignButton";
 import Form from "./Form";
 import Input from "./Input";
-// import { API } from "../../api/api";
+import { API } from "../../api/api";
 import Signin from "./Signin";
 
 const Signup = () => {
@@ -35,13 +35,13 @@ const Signup = () => {
       if (pw1 !== pw2) {
         alert("비밀번호가 일치하지 않습니다.");
       } else {
-        // const res = await API.post("/user/signup", { id: id, pw: pw1, name: name });
-        // if (res.result) {
-        //   alert("회원가입이 성공적으로 완료되었습니다.");
-        //   setComplete(true);
-        // } else {
-        //   alert("이미 존재하는 아이디입니다.");
-        // }
+        const res = await API.post("/user/signup", { id: id, pw: pw1, name: name });
+        if (res) {
+          alert("회원가입이 성공적으로 완료되었습니다.");
+          setComplete(true);
+        } else {
+          alert("이미 존재하는 아이디입니다.");
+        }
       }
     }
   };
