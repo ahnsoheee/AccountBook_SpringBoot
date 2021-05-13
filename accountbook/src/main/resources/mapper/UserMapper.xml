@@ -6,8 +6,12 @@
         INSERT INTO user(id, pw, name) VALUES(#{id}, #{pw}, #{name})
     </insert>
 
+    <select id="findUser" resultType="com.example.vo.UserVO" parameterType="String">
+            SELECT id, pw, name from user WHERE id = #{id} and pw = #{pw}
+    </select>
+
     <select id="findById" resultType="com.example.vo.UserVO" parameterType="String">
-        SELECT id, name from user WHERE id = #{id}
+        SELECT id, pw, name from user WHERE id = #{id}
     </select>
 
     <delete id="deleteUser" parameterType="String">

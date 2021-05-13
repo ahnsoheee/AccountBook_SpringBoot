@@ -10,7 +10,8 @@ import com.example.vo.UserVO;
 public interface UserMapper {
 
     List<UserVO> userList();
-    UserVO findUserById(String id);
     int insertUser(UserVO user);
+    UserVO findUser(UserVO user);
+    UserVO findById(String id);
     void deleteUser(String id);
 }
