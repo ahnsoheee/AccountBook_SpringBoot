@@ -34,3 +34,6 @@ build/
 
 node_modules/
 *.yml
+
+*.bundle.js
+*.bundle.js.map
