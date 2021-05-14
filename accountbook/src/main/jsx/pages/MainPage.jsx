@@ -7,6 +7,19 @@ const MainPage = () => {
     const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [isAuth, setAuth] = useState(false);
+    
+    useEffect(async () => {
+        const user = await API.get("/user/auth");
+        if (user) {
+          setName(user.name);
+          setId(user.id);
+          setAuth(true);
+        } else {
+          setAuth(false);
+        }
+      }, [id, name, isAuth]);
+
+      
     return isAuth ? (
         <>
         <Header id={id} name={name}/>
