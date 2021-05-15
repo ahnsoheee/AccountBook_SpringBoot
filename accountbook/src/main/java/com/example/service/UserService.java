@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.vo.UserVO;
+
 import com.example.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,8 +17,10 @@ public class UserService {
     }
 
     public boolean signin (UserVO user) {
-        UserVO res = userMapper.findUser(user);
-        if (res != null) return true;
+        if (user != null) {
+            UserVO res = userMapper.findUser(user);
+            if (res.equals(user)) return true;
+        }
         return false;
     }
 
