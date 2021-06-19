@@ -1,7 +1,6 @@
 package com.example;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
@@ -61,7 +61,6 @@ public class UserController {
             response.addCookie(cookie);
             return true;
         }
-
         return false;
     }
 
@@ -80,13 +79,32 @@ public class UserController {
 						.setHeaderParam("typ", "JWT")
 						.setExpiration(new Date(currTime + 3600000))
 						.setIssuedAt(new Date(currTime))
-						.claim(DATA_KEY, user)
+						.claim(DATA_KEY, user.getId())
 						.signWith(SignatureAlgorithm.HS256, this.generateKey())
 						.compact();
-	
+
 		return jwt;
 	}
-    
+
+    @GetMapping("/auth")
+    public UserVO auth(HttpServletRequest request) {
+        UserVO user = null;
+
+        Cookie[] cookies = request.getCookies();
+
+        for (int i = 0; i < cookies.length; i++) {
+            if (cookies[i].getName().equals("token")) {
+                Claims claims = this.getClaimFromToken(cookies[i].getValue());
+                String id = claims.get(DATA_KEY).toString();
+                user = userMapper.findById(id);
+
+                return user;
+            }
+        }
+
+        return user;
+    }
+
     @GetMapping("/{id}")
     public UserVO findUserById(@PathVariable String id) {
         return userService.findUserById(id);
@@ -99,14 +117,14 @@ public class UserController {
         } catch (UnsupportedEncodingException e) {
 			System.out.println("Decodeing failed");
         }
-        
+
         return key;
 	}
 	
-	public UserVO getUser(String jwt) {
-		Jws<Claims> claims = null;
-        claims = Jwts.parser().setSigningKey(this.generateKey()).parseClaimsJws(jwt);
-
-		return objectMapper.convertValue(claims.getBody().get(DATA_KEY), UserVO.class);
+	public Claims getClaimFromToken(String token) {
+		return Jwts.parser()
+            .setSigningKey(this.generateKey())
+            .parseClaimsJws(token)
+            .getBody();
 	}
 }
