@@ -11,7 +11,7 @@
     </select>
 
     <select id="findById" resultType="com.example.vo.UserVO" parameterType="String">
-        SELECT id, pw, name from user WHERE id = #{id}
+        SELECT id, name from user WHERE id = #{id}
     </select>
 
     <delete id="deleteUser" parameterType="String">
