@@ -12,7 +12,21 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.ui.Model;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
+
+import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 import com.example.mapper.UserMapper;
 import com.example.vo.UserVO;
@@ -23,22 +37,76 @@ import com.example.service.UserService;
 @RequestMapping("/user")
 public class UserController {
 
+    UserService userService;
+
     @Autowired
     UserMapper userMapper;
-    UserService userService;
 
     @PostMapping("/signup")
     public boolean signup(@RequestBody UserVO user) {
-        return userService.signup(user);
+        int res = userMapper.insertUser(user);
+        if (res == 1) return true;
+        return false;
     }
 
     @PostMapping("/signin")
-    public boolean signin (@RequestBody UserVO user) {
-        return userService.signin(user);
+    public boolean signin (@RequestBody UserVO user, HttpServletResponse response) {
+        UserVO res = userMapper.findUser(user);
+        if (res != null) {
+            String jwt = this.createToken(user);  
+            Cookie cookie = new Cookie("token", jwt);
+            cookie.setHttpOnly(true);
+            cookie.setMaxAge(7 * 24 * 60 * 60);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+            return true;
+        }
+
+        return false;
     }
 
+    @Value("${JWT.SECRET_KEY}") 
+	private String SECRET_KEY;
+
+	@Value("${JWT.DATA_KEY}") 
+	private String DATA_KEY;
+	
+	@Autowired
+	private ObjectMapper objectMapper;
+	
+	public String createToken(UserVO user) {
+		long currTime = System.currentTimeMillis();
+		String jwt = Jwts.builder()
+						.setHeaderParam("typ", "JWT")
+						.setExpiration(new Date(currTime + 3600000))
+						.setIssuedAt(new Date(currTime))
+						.claim(DATA_KEY, user)
+						.signWith(SignatureAlgorithm.HS256, this.generateKey())
+						.compact();
+	
+		return jwt;
+	}
+    
     @GetMapping("/{id}")
     public UserVO findUserById(@PathVariable String id) {
         return userService.findUserById(id);
     }
+
+    private byte[] generateKey(){
+		byte[] key = null;
+        try {
+            key = SECRET_KEY.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+			System.out.println("Decodeing failed");
+        }
+        
+        return key;
+	}
+	
+	public UserVO getUser(String jwt) {
+		Jws<Claims> claims = null;
+        claims = Jwts.parser().setSigningKey(this.generateKey()).parseClaimsJws(jwt);
+
+		return objectMapper.convertValue(claims.getBody().get(DATA_KEY), UserVO.class);
+	}
 }

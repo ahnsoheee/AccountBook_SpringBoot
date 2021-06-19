@@ -12,6 +12,7 @@ public class UserService {
 
     public boolean signup (UserVO user) {
         int res = userMapper.insertUser(user);
+        System.out.println(res);
         if (res == 1) return true;
         return false;
     }
