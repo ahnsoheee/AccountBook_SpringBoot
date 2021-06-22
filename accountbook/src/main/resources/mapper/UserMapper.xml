@@ -7,7 +7,7 @@
     </insert>
 
     <select id="findUser" resultType="com.example.vo.UserVO" parameterType="String">
-            SELECT id, pw, name from user WHERE id = #{id} and pw = #{pw}
+        SELECT id, pw, name from user WHERE id = #{id} and pw = #{pw}
     </select>
 
     <select id="findById" resultType="com.example.vo.UserVO" parameterType="String">

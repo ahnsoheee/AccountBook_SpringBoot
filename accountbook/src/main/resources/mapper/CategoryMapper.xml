@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.example.mapper.CategoryMapper">
+
+    <select id="getCategory" resultType="com.example.vo.CategoryVO" parameterType="java.util.HashMap">
+        SELECT id, name, user_id FROM category WHERE user_id = #{id} and type = #{type}
+    </select>
+
+    <select id="getCategoryId" resultType="int" parameterType="com.example.vo.CategoryVO">
+        SELECT id FROM category WHERE type = #{type} and name = #{name} and user_id = #{user_id}
+    </select>
+
+    <insert id="insertCategory" parameterType="com.example.vo.CategoryVO">
+        INSERT INTO category(id, name, user_id) VALUES(#{id}, #{name}, #{user_id})
+    </insert>
+
+    <update id="updateCategory" parameterType="com.example.vo.CategoryVO">
+        UPDATE category SET name = #{name} WHERE id = #{id}
+    </update>
+
+    <delete id="deleteCategory" parameterType="int">
+        DELETE FROM category WHERE id = #{id}
+    </delete>
+</mapper>

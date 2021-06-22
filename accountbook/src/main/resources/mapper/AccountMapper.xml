@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.example.mapper.AccountMapper">
+
+    <select id="getAccount" resultType="com.example.vo.AccountVO" parameterType="com.example.vo.UserVO">
+        SELECT id, name, asset FROM account WHERE user_id = #{id}
+    </select>
+
+    <select id="getAccountId" resultType="int" parameterType="com.example.vo.AccountVO">
+        SELECT id FROM account WHERE name = #{name} and user_id = #{user_id}
+    </select>
+
+    <insert id="insertAccount" parameterType="com.example.vo.AccountVO">
+        INSERT INTO account(name, asset, user_id) VALUES(#{name}, #{asset}, #{user_id})
+    </insert>
+
+    <update id="updateAccount" parameterType="com.example.vo.AccountVO">
+        UPDATE account SET name = #{name}, asset = #{asset} WHERE id = #{id}
+    </update>
+
+    <update id="addAccount" parameterType="com.example.vo.LogVO">
+        UPDATE account SET asset = asset + #{cost} WHERE id = #{id}
+    </update>
+
+    <update id="subAccount" parameterType="com.example.vo.LogVO">
+        UPDATE account SET asset = asset - #{cost} WHERE id = #{id}
+    </update>
+
+    <delete id="deleteAccount" parameterType="int">
+        DELETE FROM board WHERE id = #{id}
+    </delete>
+</mapper>

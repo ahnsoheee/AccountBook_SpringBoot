@@ -30,14 +30,11 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 import com.example.mapper.UserMapper;
 import com.example.vo.UserVO;
-import com.example.service.UserService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/user")
 public class UserController {
-
-    UserService userService;
 
     @Autowired
     UserMapper userMapper;
@@ -104,12 +101,7 @@ public class UserController {
 
         return user;
     }
-
-    @GetMapping("/{id}")
-    public UserVO findUserById(@PathVariable String id) {
-        return userService.findUserById(id);
-    }
-
+    
     private byte[] generateKey(){
 		byte[] key = null;
         try {
