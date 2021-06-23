@@ -3,7 +3,6 @@ package com.example;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Date;
-import java.text.SimpleDateFormat;  
 import java.text.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -39,24 +38,14 @@ public class LogController {
 
     @PostMapping("/add")
     public boolean insertLog(@RequestBody HashMap<String, String> h) {
-        System.out.println(h);
         LogVO log = new LogVO();
-        log.setUserId(h.get("user_id"));;
-        log.setAccountId(Integer.parseInt(h.get("account_id")));
-        log.setCategoryId(Integer.parseInt(h.get("category_id")));
+        log.setUser_id(h.get("user_id"));;
+        log.setAccount_id(Integer.parseInt(h.get("account_id")));
+        log.setCategory_id(Integer.parseInt(h.get("category_id")));
         log.setIncome(Boolean.parseBoolean(h.get("income")));
         log.setCost(Integer.parseInt(h.get("cost")));
         log.setTitle(h.get("title"));
-
-        SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd");
-        {
-            try {
-                log.setDate(dateParser.parse(h.get("date")));
-            } catch (ParseException e) {
-                e.printStackTrace();
-                return false;
-            }
-        }
+        log.setDate(h.get("date"));
 
         if (logMapper.insertLog(log) == 1) {
             if (log.getIncome()) {
@@ -77,26 +66,38 @@ public class LogController {
 
     @PostMapping("/update")
     public boolean updateLog(@RequestBody LogVO log) {
+        LogVO prev = logMapper.findById(log.getId());
+        System.out.println(prev);
         if (logMapper.updateLog(log) == 1) {
+            if (prev.getCategory_id() == 1) {
+                if (accountMapper.subAccount(prev) != 1) return false;
+            } else {
+                if (accountMapper.addAccount(prev) != 1) return false;
+            }
+
             if (log.getIncome()) {
-                if (accountMapper.addAccount(log) == 1) {
-                    return true;
-                }
-                return false;
+                if (accountMapper.addAccount(log) != 1) return false; 
+            } else {
+                if (accountMapper.subAccount(log) != 1) return false;
             }
-            else {
-                if (accountMapper.subAccount(log) == 1) {
-                    return true;
-                }
-                return false;
-            }
+            return true;
         }
         return false;
     }
 
     @DeleteMapping("") 
-    public boolean deleteLog(@RequestBody int id) {
-        if (logMapper.deleteLog(id) == 1) return true;
+    public boolean deleteLog(@RequestBody LogVO log) {
+        int id = log.getId();
+        LogVO prev = logMapper.findById(id);
+        
+        if (logMapper.deleteLog(id) == 1) {
+            if (prev.getCategory_id() == 1) {
+                if (accountMapper.addAccount(prev) != 1) return false; 
+            } else {
+                if (accountMapper.subAccount(prev) != 1) return false;
+            }
+            return true;
+        };
         return false;
     }
 }
