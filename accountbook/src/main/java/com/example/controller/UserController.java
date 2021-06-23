@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
 import java.io.UnsupportedEncodingException;
+import io.jsonwebtoken.ExpiredJwtException;
 import java.util.Date;
 
 import org.springframework.stereotype.Service;
@@ -91,17 +92,28 @@ public class UserController {
 
         for (int i = 0; i < cookies.length; i++) {
             if (cookies[i].getName().equals("token")) {
-                Claims claims = this.getClaimFromToken(cookies[i].getValue());
-                String id = claims.get(DATA_KEY).toString();
-                user = userMapper.findById(id);
-
+                String token = cookies[i].getValue();
+                if (this.validateToken(token)){
+                    Claims claims = this.getClaimFromToken(token);
+                    String id = claims.get(DATA_KEY).toString();
+                    user = userMapper.findById(id);
+                }
                 return user;
             }
         }
-
         return user;
     }
     
+    public boolean validateToken(String token) {
+        try {
+            return Jwts.parser().setSigningKey(this.generateKey()).parseClaimsJws(token).getBody().getExpiration().after(new Date());
+        } catch (ExpiredJwtException e) {
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     private byte[] generateKey(){
 		byte[] key = null;
         try {
