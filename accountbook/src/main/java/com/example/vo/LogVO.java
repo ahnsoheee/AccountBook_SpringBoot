@@ -12,7 +12,7 @@ public class LogVO {
     String user_id;
     String title;
     String type;
-    Date date;
+    String date;
     Boolean income;
     
     public int getId() {
@@ -31,19 +31,19 @@ public class LogVO {
         this.cost = cost;
     }
 
-    public int getCategoryId() {
+    public int getCategory_id() {
         return category_id;
     }
 
-    public void setCategoryId(int category_id) {
+    public void setCategory_id(int category_id) {
         this.category_id = category_id;
     }
 
-    public int getAccountId() {
+    public int getAccount_id() {
         return account_id;
     }
 
-    public void setAccountId(int account_id) {
+    public void setAccount_id(int account_id) {
         this.account_id = account_id;
     }
     
@@ -63,11 +63,11 @@ public class LogVO {
         this.account = account;
     }
 
-    public String getUserId() {
+    public String getUser_id() {
         return user_id;
     }
 
-    public void setUserId(String user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 
@@ -87,11 +87,11 @@ public class LogVO {
         this.type = type;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
