@@ -7,7 +7,7 @@
     </select>
 
     <insert id="insertLog" parameterType="com.example.vo.LogVO">
-        INSERT INTO log(id, pw, name) VALUES(#{id}, #{pw}, #{name})
+        INSERT INTO board(user_id, category_id, account_id, title, date, cost) VALUES (#{user_id}, #{category_id}, #{account_id}, #{title}, #{date}, #{cost}) 
     </insert>
 
     <!-- <update id="updateLog" resultType="int" parameterType="com.example.vo.LogVO">
