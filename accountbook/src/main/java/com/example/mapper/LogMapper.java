@@ -11,7 +11,7 @@ import com.example.vo.UserVO;
 public interface LogMapper {
 
     List<LogVO> getLog(String id);
-    // int getLogId()
+    LogVO findById(int id);
     int insertLog(LogVO log);
     int updateLog(LogVO log);
     int deleteLog(int id);
