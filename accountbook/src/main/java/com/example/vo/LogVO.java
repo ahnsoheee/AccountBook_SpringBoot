@@ -4,20 +4,31 @@ import java.util.Date;
 
 public class LogVO {
     int id;
+    int cost;
     int category_id;
     int account_id;
-    int cost;
+    String category;
+    String account;
     String user_id;
     String title;
+    String type;
     Date date;
     Boolean income;
-
+    
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+    
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 
     public int getCategoryId() {
@@ -35,13 +46,21 @@ public class LogVO {
     public void setAccountId(int account_id) {
         this.account_id = account_id;
     }
-
-    public int getCost() {
-        return cost;
+    
+    public String getCategory() {
+        return category;
     }
 
-    public void setCost(int cost) {
-        this.cost = cost;
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public String getUserId() {
@@ -60,12 +79,12 @@ public class LogVO {
         this.title = title;
     }
 
-    public Boolean getIncome() {
-        return income;
+    public String getType() {
+        return type;
     }
 
-    public void setIncome(Boolean income) {
-        this.income = income;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Date getDate() {
@@ -74,5 +93,13 @@ public class LogVO {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Boolean getIncome() {
+        return income;
+    }
+
+    public void setIncome(Boolean income) {
+        this.income = income;
     }
 }
