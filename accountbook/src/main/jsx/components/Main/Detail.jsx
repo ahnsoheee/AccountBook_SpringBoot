@@ -90,7 +90,7 @@ const Detail = ({ user, content, setOpen, setLog }) => {
   };
 
   const onClickDelete = async () => {
-    const result = await API.delete("/log/delete", {
+    const result = await API.delete("/log", {
       id: input[2],
       account_id: input[5],
       cost: input[6],
@@ -102,6 +102,7 @@ const Detail = ({ user, content, setOpen, setLog }) => {
       setLog(logs);
     }
   };
+  
   return (
     <Modal onClose={onClose}>
       <Item>
