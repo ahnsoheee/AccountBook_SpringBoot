@@ -2,19 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.example.mapper.CategoryMapper">
 
-    <select id="getCategory" resultType="com.example.vo.CategoryVO" parameterType="java.util.HashMap">
-        SELECT id, name, user_id FROM category WHERE user_id = #{id} and type = #{type}
+    <select id="getCategory" resultType="com.example.dto.CategoryDTO" parameterType="com.example.dto.CategoryDTO">
+        SELECT id, name, user_id FROM category WHERE user_id = #{user_id} and type = #{type}
     </select>
 
-    <select id="getCategoryId" resultType="int" parameterType="com.example.vo.CategoryVO">
+    <select id="getCategoryId" resultType="int" parameterType="com.example.dto.CategoryDTO">
         SELECT count(id) FROM category WHERE type = #{type} and name = #{name} and user_id = #{user_id}
     </select>
 
-    <insert id="insertCategory" parameterType="com.example.vo.CategoryVO">
+    <insert id="insertCategory" parameterType="com.example.dto.CategoryDTO">
         INSERT INTO category(type, name, user_id) VALUES(#{type}, #{name}, #{user_id})
     </insert>
 
-    <update id="updateCategory" parameterType="com.example.vo.CategoryVO">
+    <update id="updateCategory" parameterType="com.example.dto.CategoryDTO">
         UPDATE category SET name = #{name} WHERE id = #{id}
     </update>
 

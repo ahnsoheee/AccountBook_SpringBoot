@@ -2,19 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.example.mapper.UserMapper">
 
-    <insert id="insertUser" parameterType="com.example.vo.UserVO">
-        INSERT INTO user(id, pw, name) VALUES(#{id}, #{pw}, #{name})
+    <insert id="insertUser" parameterType="com.example.dto.UserDTO">
+        INSERT INTO user(user_id, pw, name) VALUES(#{user_id}, #{pw}, #{name})
     </insert>
 
-    <select id="findUser" resultType="com.example.vo.UserVO" parameterType="String">
-        SELECT id, pw, name from user WHERE id = #{id} and pw = #{pw}
+    <select id="findUser" resultType="com.example.dto.UserDTO" parameterType="String">
+        SELECT user_id, pw, name from user WHERE user_id = #{user_id} and pw = #{pw}
     </select>
 
-    <select id="findById" resultType="com.example.vo.UserVO" parameterType="String">
-        SELECT id, name from user WHERE id = #{id}
+    <select id="findById" resultType="com.example.dto.UserDTO" parameterType="String">
+        SELECT user_id, name from user WHERE user_id = #{user_id}
     </select>
 
     <delete id="deleteUser" parameterType="String">
-        DELETE FROM user WHERE id = #{id}
+        DELETE FROM user WHERE user_id = #{user_id}
     </delete>
 </mapper>

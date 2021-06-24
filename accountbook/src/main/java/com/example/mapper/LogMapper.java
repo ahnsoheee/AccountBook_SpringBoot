@@ -4,15 +4,15 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.example.vo.LogVO;
-import com.example.vo.UserVO;
+import com.example.dto.LogDTO;
+import com.example.dto.UserDTO;
 
 @Mapper 
 public interface LogMapper {
 
-    List<LogVO> getLog(String id);
-    LogVO findById(int id);
-    int insertLog(LogVO log);
-    int updateLog(LogVO log);
+    List<LogDTO> getLog(String id);
+    LogDTO findById(int id);
+    int insertLog(LogDTO log);
+    int updateLog(LogDTO log);
     int deleteLog(int id);
 }

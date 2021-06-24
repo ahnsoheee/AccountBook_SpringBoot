@@ -1,8 +1,8 @@
-package com.example.vo;
+package com.example.dto;
 
 import java.util.Date;
 
-public class LogVO {
+public class LogDTO {
     int id;
     int cost;
     int category_id;
