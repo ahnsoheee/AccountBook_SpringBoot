@@ -92,9 +92,9 @@ public class LogController {
         
         if (logMapper.deleteLog(id) == 1) {
             if (prev.getCategory_id() == 1) {
-                if (accountMapper.addAccount(prev) != 1) return false; 
+                if (accountMapper.subAccount(prev) != 1) return false; 
             } else {
-                if (accountMapper.subAccount(prev) != 1) return false;
+                if (accountMapper.addAccount(prev) != 1) return false;
             }
             return true;
         };
