@@ -32,9 +32,13 @@ public class CategoryController {
     }
 
     @PostMapping("/add")
-    public boolean createCategory(@RequestBody CategoryVO category) {
-        int category_id = categoryMapper.getCategoryId(category);
-        if (category_id == 0) {
+    public boolean insertCategory(@RequestBody HashMap<String, String> h) {
+        CategoryVO category = new CategoryVO();
+        category.setName(h.get("name"));
+        category.setUser_id(h.get("user_id"));
+        category.setType(h.get("type"));
+        
+        if (categoryMapper.getCategoryId(category) == 0) {
             if (categoryMapper.insertCategory(category) == 1) return true;
         }
         return false;
