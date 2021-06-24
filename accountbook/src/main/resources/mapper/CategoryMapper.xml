@@ -7,11 +7,11 @@
     </select>
 
     <select id="getCategoryId" resultType="int" parameterType="com.example.vo.CategoryVO">
-        SELECT id FROM category WHERE type = #{type} and name = #{name} and user_id = #{user_id}
+        SELECT count(id) FROM category WHERE type = #{type} and name = #{name} and user_id = #{user_id}
     </select>
 
     <insert id="insertCategory" parameterType="com.example.vo.CategoryVO">
-        INSERT INTO category(id, name, user_id) VALUES(#{id}, #{name}, #{user_id})
+        INSERT INTO category(type, name, user_id) VALUES(#{type}, #{name}, #{user_id})
     </insert>
 
     <update id="updateCategory" parameterType="com.example.vo.CategoryVO">
