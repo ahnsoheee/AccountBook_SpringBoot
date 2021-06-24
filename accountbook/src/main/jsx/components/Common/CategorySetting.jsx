@@ -33,10 +33,10 @@ const CategorySetting = ({ user, setCategory, incomes, expends, setIncomes, setE
 
   const onCreate = async () => {
     if (!input[2]) alert("카테고리 이름을 입력하세요.");
-    const result = await API.post("/category/add", { type: input[0] ? "수입" : "지출", name: input[2], user_id: user });
+    const result = await API.post("/category/add", { "type": input[0] ? "수입" : "지출", "name": input[2], "user_id": user });
     if (result) {
-      const incomes = await API.post("/category", { id: user, type: "수입" });
-      const expends = await API.post("/category", { id: user, type: "지출" });
+      const incomes = await API.post("/category", { "user_id": user, "type": "수입" });
+      const expends = await API.post("/category", { "user_id": user, "type": "지출" });
       setIncomes(incomes);
       setExpends(expends);
     } else {

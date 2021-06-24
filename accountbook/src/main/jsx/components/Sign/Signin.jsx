@@ -22,7 +22,7 @@ const Signin = () => {
     if (!id.length || !pw.length) {
       alert("아이디와 비밀번호를 모두 입력하세요.");
     } else {
-      const res = await API.post("/user/signin", { id: id, pw: pw });
+      const res = await API.post("/user/signin", { "user_id": id, "pw": pw });
       if (res) {
         location.href = "/main";
       } else {

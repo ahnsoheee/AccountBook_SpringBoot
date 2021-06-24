@@ -6,12 +6,12 @@ import { API } from "../../api/api";
 
 const List = ({ user, logs, setLog }) => {
   const [content, setContent] = useState([true, false, "", "", "", "", "", ""]);
-  const [open, setOpen] = useState(false); // 내역 클릭했는지
+  const [open, setOpen] = useState(false);
 
   let sep = "";
 
   useEffect(async () => {
-    const logs = await API.post("/log", { id: user });
+    const logs = await API.post("/log", { "user_id": user });
     setLog(logs);
   }, []);
 

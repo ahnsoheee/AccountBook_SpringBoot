@@ -35,7 +35,7 @@ const Signup = () => {
       if (pw1 !== pw2) {
         alert("비밀번호가 일치하지 않습니다.");
       } else {
-        const res = await API.post("/user/signup", { id: id, pw: pw1, name: name });
+        const res = await API.post("/user/signup", { "user_id": id, "pw": pw1, "name": name });
         if (res) {
           alert("회원가입이 성공적으로 완료되었습니다.");
           setComplete(true);

@@ -14,7 +14,7 @@ const AccountList = ({ id, name, asset, user, setAccounts }) => {
   const onDelete = async () => {
     const result = await API.delete("/account", id );
     if (result) {
-      const accounts = await API.post("/account", { id: user });
+      const accounts = await API.post("/account", { "user_id": user });
       setAccounts(accounts);
     }
   };
@@ -30,9 +30,9 @@ const AccountList = ({ id, name, asset, user, setAccounts }) => {
   const onClick = async () => {
     if (isNaN(cost)) alert("숫자만 입력해주세요.");
     else {
-      const result = await API.post("/account/update", { name: title, asset: cost, id: id });
+      const result = await API.post("/account/update", { "name": title, "asset": cost, "id": id });
       if (result) {
-        const accounts = await API.post("/account", { id: user });
+        const accounts = await API.post("/account", { "user_id": user });
         setAccounts(accounts);
       }
       setState(false);

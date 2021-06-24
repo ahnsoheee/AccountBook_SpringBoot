@@ -27,7 +27,7 @@ const MainPage = () => {
     const user = await API.get("/user/auth");
     if (user) {
       setName(user.name);
-      setId(user.id);
+      setId(user.user_id);
       setAuth(true);
     } else {
       setAuth(false);

@@ -27,9 +27,9 @@ const AccountSetting = ({ user, setAccount, accounts, setAccounts }) => {
     if (!input[0] || !input[1]) alert("자산의 이름과 금액을 모두 입력하세요.");
     if (isNaN(input[1])) alert("금액에 숫자를 입력하세요.");
     else {
-      const result = await API.post("/account/add", { name: input[0], asset: input[1], user_id: user });
+      const result = await API.post("/account/add", { "name": input[0], "asset": input[1], "user_id": user });
       if (result) {
-        const accounts = await API.post("/account", { id: user });
+        const accounts = await API.post("/account", { "user_id": user });
         setAccounts(accounts);
       } else {
         alert("이미 존재하는 자산 이름입니다.");

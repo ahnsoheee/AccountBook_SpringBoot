@@ -24,24 +24,24 @@ const Detail = ({ user, content, setOpen, setLog }) => {
   useEffect(async () => {
     let categories;
     if (input[0]) {
-      categories = await API.post("/category", { id: user, type: "수입" });
+      categories = await API.post("/category", { "user_id": user, "type": "수입" });
     } else {
-      categories = await API.post("/category", { id: user, type: "지출" });
+      categories = await API.post("/category", { "user_id": user, "type": "지출" });
     }
     setCategories(categories);
-    const accounts = await API.post("/account", { id: user });
+    const accounts = await API.post("/account", { "user_id": user });
     setAccounts(accounts);
   }, []);
 
   const onClickIncome = async () => {
     setInput([true, false, input[2], input[3], "", input[5], input[6], input[7]]);
-    const categories = await API.post("/category", { id: user, type: "수입" });
+    const categories = await API.post("/category", { "user_id": user, "type": "수입" });
     setCategories(categories);
   };
 
   const onClickExpend = async () => {
     setInput([false, true, input[2], input[3], "", input[5], input[6], input[7]]);
-    const categories = await API.post("/category", { id: user, type: "지출" });
+    const categories = await API.post("/category", { "user_id": user, "type": "지출" });
     setCategories(categories);
   };
 
@@ -73,16 +73,16 @@ const Detail = ({ user, content, setOpen, setLog }) => {
     if (!input[3] || !input[4] || !input[5] || !input[6] || !input[7]) alert("모두 입력하세요");
     else {
       const result = await API.post("/log/update", {
-        id: input[2],
-        date: input[3],
-        category_id: input[4],
-        account_id: input[5],
-        cost: input[6],
-        title: input[7],
-        income: input[0],
+        "id": input[2],
+        "date": input[3],
+        "category_id": input[4],
+        "account_id": input[5],
+        "cost": input[6],
+        "title": input[7],
+        "income": input[0],
       });
       if (result) {
-        const logs = await API.post("/log", { id: user });
+        const logs = await API.post("/log", { "user_id": user });
         setOpen(false);
         setLog(logs);
       }
@@ -91,13 +91,13 @@ const Detail = ({ user, content, setOpen, setLog }) => {
 
   const onClickDelete = async () => {
     const result = await API.delete("/log", {
-      id: input[2],
-      account_id: input[5],
-      cost: input[6],
-      income: input[0],
+      "id": input[2],
+      "account_id": input[5],
+      "cost": input[6],
+      "income": input[0],
     });
     if (result) {
-      const logs = await API.post("/log", { id: user });
+      const logs = await API.post("/log", { "user_id": user });
       setOpen(false);
       setLog(logs);
     }
