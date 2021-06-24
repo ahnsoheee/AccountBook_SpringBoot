@@ -14,11 +14,11 @@ public class AccountVO {
         this.id = id;
     }
 
-    public String UserId() {
+    public String User_id() {
         return user_id;
     }
 
-    public void setUserId(String user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 
