@@ -1,6 +1,7 @@
 package com.example;
 
 import java.util.List;
+import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,9 +32,13 @@ public class AccountController {
     }
 
     @PostMapping("/add")
-    public boolean createAccount(@RequestBody AccountVO account) {
-        int account_id = accountMapper.getAccountId(account);
-        if (account_id == 0) {
+    public boolean insertAccount(@RequestBody HashMap<String, String> h) {
+        AccountVO account = new AccountVO();
+        account.setUser_id(h.get("user_id"));
+        account.setAsset(Integer.parseInt(h.get("asset")));
+        account.setName(h.get("name"));
+        
+        if (accountMapper.getAccountId(account) == 0) {
             if (accountMapper.insertAccount(account) == 1) return true;
         }
         return false;
