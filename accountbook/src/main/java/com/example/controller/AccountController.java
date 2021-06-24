@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.mapper.AccountMapper;
-import com.example.vo.AccountVO;
-import com.example.vo.UserVO;
+import com.example.dto.AccountDTO;
+import com.example.dto.UserDTO;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -25,15 +25,14 @@ public class AccountController {
     AccountMapper accountMapper;
 
     @PostMapping("")
-    public List<AccountVO> getAccount(@RequestBody UserVO user) {
-        List<AccountVO> accountList = accountMapper.getAccount(user);
-
+    public List<AccountDTO> getAccount(@RequestBody UserDTO user) {
+        List<AccountDTO> accountList = accountMapper.getAccount(user);
         return accountList;
     }
 
     @PostMapping("/add")
     public boolean insertAccount(@RequestBody HashMap<String, String> h) {
-        AccountVO account = new AccountVO();
+        AccountDTO account = new AccountDTO();
         account.setUser_id(h.get("user_id"));
         account.setAsset(Integer.parseInt(h.get("asset")));
         account.setName(h.get("name"));
@@ -45,7 +44,7 @@ public class AccountController {
     }
 
     @PostMapping("/update")
-    public boolean updateAccount(@RequestBody AccountVO account) {
+    public boolean updateAccount(@RequestBody AccountDTO account) {
         if (accountMapper.updateAccount(account) == 1) return true;
         return false;
     }

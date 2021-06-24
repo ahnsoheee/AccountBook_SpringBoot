@@ -2,23 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.example.mapper.LogMapper">
 
-    <select id="getLog" resultType="com.example.vo.LogVO" parameterType="String">
-        SELECT id, category_id, (SELECT c.type FROM category c WHERE b.category_id=c.id) AS type, (SELECT c.name FROM category c WHERE b.category_id=c.id) AS category, title, date, cost, account_id, (SELECT a.name FROM account a WHERE a.id=b.account_id) AS account FROM board b WHERE user_id=#{id} ORDER BY date DESC
+    <select id="getLog" resultType="com.example.dto.LogDTO" parameterType="String">
+        SELECT id, category_id, (SELECT c.type FROM category c WHERE b.category_id=c.id) AS type, (SELECT c.name FROM category c WHERE b.category_id=c.id) AS category, title, date, cost, account_id, (SELECT a.name FROM account a WHERE a.id=b.account_id) AS account FROM board b WHERE user_id=#{user_id} ORDER BY date DESC
     </select>
 
-    <select id="findById" resultType="com.example.vo.LogVO" parameterType="int">
+    <select id="findById" resultType="com.example.dto.LogDTO" parameterType="int">
         Select id, category_id, account_id, title, date, cost FROM board WHERE id = #{id} 
     </select>
 
-    <insert id="insertLog" parameterType="com.example.vo.LogVO">
+    <insert id="insertLog" parameterType="com.example.dto.LogDTO">
         INSERT INTO board(user_id, category_id, account_id, title, date, cost) VALUES (#{user_id}, #{category_id}, #{account_id}, #{title}, #{date}, #{cost}) 
     </insert>
 
-    <update id="updateLog" parameterType="com.example.vo.LogVO">
+    <update id="updateLog" parameterType="com.example.dto.LogDTO">
         UPDATE board SET category_id = #{category_id}, account_id = #{account_id}, title = #{title}, date = #{date}, cost = #{cost} WHERE id = #{id}
     </update>
 
-    <delete id="deleteLog" parameterType="com.example.vo.LogVO">
+    <delete id="deleteLog" parameterType="com.example.dto.LogDTO">
         DELETE FROM board WHERE id = #{id}
     </delete>
 </mapper>

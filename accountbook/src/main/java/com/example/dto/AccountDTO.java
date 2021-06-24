@@ -1,10 +1,10 @@
-package com.example.vo;
+package com.example.dto;
 
-public class AccountVO {
+public class AccountDTO {
     int id;
+    int asset;
     String user_id;
     String name;
-    int asset;
 
     public int getId() {
         return id;
@@ -14,6 +14,14 @@ public class AccountVO {
         this.id = id;
     }
 
+    public int getAsset() {
+        return asset;
+    }
+
+    public void setAsset(int asset) {
+        this.asset = asset;
+    }
+    
     public String User_id() {
         return user_id;
     }
@@ -28,13 +36,5 @@ public class AccountVO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getAsset() {
-        return asset;
-    }
-
-    public void setAsset(int asset) {
-        this.asset = asset;
     }
 }

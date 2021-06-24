@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.mapper.CategoryMapper;
-import com.example.vo.CategoryVO;
-import com.example.vo.UserVO;
+import com.example.dto.CategoryDTO;
+import com.example.dto.UserDTO;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -26,18 +26,13 @@ public class CategoryController {
     CategoryMapper categoryMapper;
 
     @PostMapping("")
-    public List<CategoryVO> getCategory(@RequestBody HashMap<String, String> h) {
-        List<CategoryVO> categoryList = categoryMapper.getCategory(h);
+    public List<CategoryDTO> getCategory(@RequestBody CategoryDTO category) {
+        List<CategoryDTO> categoryList = categoryMapper.getCategory(category);
         return categoryList;
     }
 
     @PostMapping("/add")
-    public boolean insertCategory(@RequestBody HashMap<String, String> h) {
-        CategoryVO category = new CategoryVO();
-        category.setName(h.get("name"));
-        category.setUser_id(h.get("user_id"));
-        category.setType(h.get("type"));
-        
+    public boolean insertCategory(@RequestBody CategoryDTO category) {
         if (categoryMapper.getCategoryId(category) == 0) {
             if (categoryMapper.insertCategory(category) == 1) return true;
         }
@@ -45,7 +40,7 @@ public class CategoryController {
     }
 
     @PostMapping("/update")
-    public boolean updateCategory(@RequestBody CategoryVO category) {
+    public boolean updateCategory(@RequestBody CategoryDTO category) {
         if (categoryMapper.updateCategory(category) == 1) return true;
         return false;
     }

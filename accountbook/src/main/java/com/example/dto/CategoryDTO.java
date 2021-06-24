@@ -1,6 +1,6 @@
-package com.example.vo;
+package com.example.dto;
 
-public class CategoryVO {
+public class CategoryDTO {
     int id;
     int type_id;
     String type;

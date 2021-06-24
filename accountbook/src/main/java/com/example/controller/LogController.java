@@ -16,9 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.mapper.LogMapper;
 import com.example.mapper.AccountMapper;
-import com.example.vo.LogVO;
-import com.example.vo.UserVO;
-
+import com.example.dto.LogDTO;
+import com.example.dto.UserDTO;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -32,21 +31,13 @@ public class LogController {
     AccountMapper accountMapper;
 
     @PostMapping("")
-    public List<LogVO> getLog(@RequestBody UserVO user) {
-        return logMapper.getLog(user.getId());
+    public List<LogDTO> getLog(@RequestBody UserDTO user) {
+        List<LogDTO> log = logMapper.getLog(user.getUser_id());
+        return log;
     }
 
     @PostMapping("/add")
-    public boolean insertLog(@RequestBody HashMap<String, String> h) {
-        LogVO log = new LogVO();
-        log.setUser_id(h.get("user_id"));;
-        log.setAccount_id(Integer.parseInt(h.get("account_id")));
-        log.setCategory_id(Integer.parseInt(h.get("category_id")));
-        log.setIncome(Boolean.parseBoolean(h.get("income")));
-        log.setCost(Integer.parseInt(h.get("cost")));
-        log.setTitle(h.get("title"));
-        log.setDate(h.get("date"));
-
+    public boolean insertLog(@RequestBody LogDTO log) {
         if (logMapper.insertLog(log) == 1) {
             if (log.getIncome()) {
                 if (accountMapper.addAccount(log) == 1) {
@@ -65,9 +56,9 @@ public class LogController {
     }
 
     @PostMapping("/update")
-    public boolean updateLog(@RequestBody LogVO log) {
-        LogVO prev = logMapper.findById(log.getId());
-        System.out.println(prev);
+    public boolean updateLog(@RequestBody LogDTO log) {
+        LogDTO prev = logMapper.findById(log.getId());
+
         if (logMapper.updateLog(log) == 1) {
             if (prev.getCategory_id() == 1) {
                 if (accountMapper.subAccount(prev) != 1) return false;
@@ -86,9 +77,9 @@ public class LogController {
     }
 
     @DeleteMapping("") 
-    public boolean deleteLog(@RequestBody LogVO log) {
+    public boolean deleteLog(@RequestBody LogDTO log) {
         int id = log.getId();
-        LogVO prev = logMapper.findById(id);
+        LogDTO prev = logMapper.findById(id);
         
         if (logMapper.deleteLog(id) == 1) {
             if (prev.getCategory_id() == 1) {

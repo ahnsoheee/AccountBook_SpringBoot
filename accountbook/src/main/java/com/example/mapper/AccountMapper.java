@@ -4,18 +4,18 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.example.vo.AccountVO;
-import com.example.vo.LogVO;
-import com.example.vo.UserVO;
+import com.example.dto.AccountDTO;
+import com.example.dto.LogDTO;
+import com.example.dto.UserDTO;
 
 @Mapper 
 public interface AccountMapper {
 
-    List<AccountVO> getAccount(UserVO user);
-    int getAccountId(AccountVO account);
-    int insertAccount(AccountVO account);
-    int updateAccount(AccountVO account);
-    int addAccount(LogVO log);
-    int subAccount(LogVO log);
-    int deleteAccount(int id);
+    public List<AccountDTO> getAccount(UserDTO user);
+    public int getAccountId(AccountDTO account);
+    public int insertAccount(AccountDTO account);
+    public int updateAccount(AccountDTO account);
+    public int addAccount(LogDTO log);
+    public int subAccount(LogDTO log);
+    public int deleteAccount(int id);
 }
