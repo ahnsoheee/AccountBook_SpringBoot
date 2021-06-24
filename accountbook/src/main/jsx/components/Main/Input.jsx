@@ -9,21 +9,21 @@ const Input = ({ user, setLog, input, setInput }) => {
   const [accounts, setAccounts] = useState("");
 
   useEffect(async () => {
-    const categories = await API.post("/category", { id: user, type: "수입" });
-    const accounts = await API.post("/account", { id: user });
+    const categories = await API.post("/category", { "user_id": user, "type": "수입" });
+    const accounts = await API.post("/account", { "user_id": user });
     setCategories(categories);
     setAccounts(accounts);
   }, []);
 
   const onClickIncome = async () => {
     setInput([true, false, input[2], input[3], input[4], input[5], input[6]]);
-    const categories = await API.post("/category", { id: user, type: "수입" });
+    const categories = await API.post("/category", { "user_id": user, "type": "수입" });
     setCategories(categories);
   };
 
   const onClickExpend = async () => {
     setInput([false, true, input[2], input[3], input[4], input[5], input[6]]);
-    const categories = await API.post("/category", { id: user, type: "지출" });
+    const categories = await API.post("/category", { "user_id": user, "type": "지출" });
     setCategories(categories);
   };
 
@@ -51,16 +51,16 @@ const Input = ({ user, setLog, input, setInput }) => {
     if (!input[2] || !input[3] || !input[4] || !input[5] || !input[6]) alert("모두 입력하세요");
     else {
       const result = await API.post("/log/add", {
-        user_id: user,
-        date: input[2],
-        category_id: input[3],
-        account_id: input[4],
-        cost: input[5],
-        title: input[6],
-        income: input[0],
+        "user_id": user,
+        "date": input[2],
+        "category_id": input[3],
+        "account_id": input[4],
+        "cost": input[5],
+        "title": input[6],
+        "income": input[0],
       });
       if (result) {
-        const logs = await API.post("/log", { id: user });
+        const logs = await API.post("/log", { "user_id": user });
         setLog(logs);
       }
     }
