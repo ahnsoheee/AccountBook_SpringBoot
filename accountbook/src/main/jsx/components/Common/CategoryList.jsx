@@ -11,7 +11,7 @@ const CategoryList = ({ id, name, user, setIncomes, setExpends }) => {
   };
 
   const onDelete = async () => {
-    const result = await API.delete("/category", { id: id });
+    const result = await API.delete("/category", id );
     if (result) {
       const incomes = await API.post("/category", { id: user, type: "수입" });
       const expends = await API.post("/category", { id: user, type: "지출" });

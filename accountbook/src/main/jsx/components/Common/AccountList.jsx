@@ -12,7 +12,7 @@ const AccountList = ({ id, name, asset, user, setAccounts }) => {
   };
 
   const onDelete = async () => {
-    const result = await API.delete("/account", { id: id });
+    const result = await API.delete("/account", id );
     if (result) {
       const accounts = await API.post("/account", { id: user });
       setAccounts(accounts);
