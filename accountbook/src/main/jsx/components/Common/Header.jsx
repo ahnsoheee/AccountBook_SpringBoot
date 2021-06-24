@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import Menu from "./Menu";
 
-const Header = () => {
+const Header = ({ id, name }) => {
   return (
     <Wrapper>
       <Title>가계부</Title>
+      <Menu id={id} name={name} />
     </Wrapper>
   );
 };
