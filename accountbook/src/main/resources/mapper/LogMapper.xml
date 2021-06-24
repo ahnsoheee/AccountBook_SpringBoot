@@ -6,14 +6,19 @@
         SELECT id, category_id, (SELECT c.type FROM category c WHERE b.category_id=c.id) AS type, (SELECT c.name FROM category c WHERE b.category_id=c.id) AS category, title, date, cost, account_id, (SELECT a.name FROM account a WHERE a.id=b.account_id) AS account FROM board b WHERE user_id=#{id} ORDER BY date DESC
     </select>
 
+    <select id="findById" resultType="com.example.vo.LogVO" parameterType="int">
+        Select id, category_id, account_id, title, date, cost FROM board WHERE id = #{id} 
+    </select>
+
     <insert id="insertLog" parameterType="com.example.vo.LogVO">
         INSERT INTO board(user_id, category_id, account_id, title, date, cost) VALUES (#{user_id}, #{category_id}, #{account_id}, #{title}, #{date}, #{cost}) 
     </insert>
 
-    <!-- <update id="updateLog" resultType="int" parameterType="com.example.vo.LogVO">
-    </update> -->
+    <update id="updateLog" parameterType="com.example.vo.LogVO">
+        UPDATE board SET category_id = #{category_id}, account_id = #{account_id}, title = #{title}, date = #{date}, cost = #{cost} WHERE id = #{id}
+    </update>
 
-    <delete id="deleteLog" parameterType="int">
+    <delete id="deleteLog" parameterType="com.example.vo.LogVO">
         DELETE FROM board WHERE id = #{id}
     </delete>
 </mapper>
