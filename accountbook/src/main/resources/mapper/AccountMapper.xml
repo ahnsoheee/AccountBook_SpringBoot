@@ -7,7 +7,7 @@
     </select>
 
     <select id="getAccountId" resultType="int" parameterType="com.example.vo.AccountVO">
-        SELECT id FROM account WHERE name = #{name} and user_id = #{user_id}
+        SELECT count(id) FROM account WHERE name = #{name} and user_id = #{user_id}
     </select>
 
     <insert id="insertAccount" parameterType="com.example.vo.AccountVO">
@@ -19,14 +19,14 @@
     </update>
 
     <update id="addAccount" parameterType="com.example.vo.LogVO">
-        UPDATE account SET asset = asset + #{cost} WHERE id = #{id}
+        UPDATE account SET asset = asset + #{cost} WHERE id = #{account_id}
     </update>
 
     <update id="subAccount" parameterType="com.example.vo.LogVO">
-        UPDATE account SET asset = asset - #{cost} WHERE id = #{id}
+        UPDATE account SET asset = asset - #{cost} WHERE id = #{account_id}
     </update>
 
     <delete id="deleteAccount" parameterType="int">
-        DELETE FROM board WHERE id = #{id}
+        DELETE FROM account WHERE id = #{id}
     </delete>
 </mapper>
